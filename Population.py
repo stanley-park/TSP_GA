@@ -4,12 +4,13 @@ import Tour
 
 class Population:
 
-	def __init__(self, population_size, initialize):
+	def __init__(self, population_size, initialize, tm):
+		self.tm = tm
 		self.population_size = population_size
-		self.tours = [None]*self.population
+		self.tours = [None]*self.population_size
 		if initialize:
 			for i in range(population_size):
-				new_tour = Tour()
+				new_tour = Tour.Tour(self.tm)
 				new_tour.generate_individual()
 				self.save_tour(i, new_tour)
 
@@ -32,5 +33,5 @@ class Population:
 		return fittest
 
 	# Get population size
-	def population_size(self):
+	def get_population_size(self):
 		return len(self.tours)

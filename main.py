@@ -1,12 +1,13 @@
 # This is the main class that creates a tour of cities and evolves the solution
 import City
-import Tour_Manager as tm
+import Tour_Manager
 import Tour
 import Population
 import Genetic_Algorithm
 
 def main():
-
+	tm = Tour_Manager.Tour_Manager()
+	ga = Genetic_Algorithm.Genetic_Algorithm(tm)
 	# Create and add our cities
 	city1 = City.City(60, 200)
 	print(type(city1))
@@ -51,18 +52,18 @@ def main():
 	tm.add_city(city20)
 
 	# Initialize population
-	pop = Population(50, True)
+	pop = Population.Population(50, True, tm)
 	print("Initial Distance: " + str(pop.get_fittest().get_distance()))
 
 	# Evolve population for 100 generations
 	for i in range(101):
-		pop = Genetic_Algorithm.evolve_population(pop)
+		pop = ga.evolve_population(pop)
 
 	# Print results
 	print("Finished")
 	print("Final Distance: " + str(pop.get_fittest().get_distance()))
 	print("Solution: ")
-	print(str(pop.get_fittest()))
+	print(pop.get_fittest().to_string())
 
 if __name__ == "__main__":
 	main()
