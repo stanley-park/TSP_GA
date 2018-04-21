@@ -31,7 +31,6 @@ def main():
 		list_of_coords = [(60, 200), (180, 200), (80, 180), (140, 180), (20, 160), (100, 160), (200, 160),
 		 					(140, 140), (40, 120), (100, 120), (180, 100), (60, 80), (120, 80), (180, 60),
 		 					(20, 40), (100, 40), (200, 40), (20, 20), (60, 20), (160, 20)]
-		print(list_of_coords)
 		# Create and add our cities
 		city1 = City.City(list_of_coords[0][0], list_of_coords[0][1])
 		tm.add_city(city1)
@@ -78,6 +77,7 @@ def main():
 	# Initialize population
 	pop = Population.Population(50, True, tm)
 	print("Initial Distance: " + str(pop.get_fittest().get_distance()))
+	print(list_of_coords)
 
 	plt.title('Initial order of cities added')
 	x, y = zip(*list_of_coords)
@@ -99,16 +99,16 @@ def main():
 	print("Solution: ")
 	print(pop.get_fittest().to_string())
 	solution_path_coords = pop.get_fittest().to_string().split('->')
+	coords = []
+
 	for i in range(len(solution_path_coords)):
-		if solution_path_coords[i] != '':
-			solution_path_coords[i] = ast.literal_eval(solution_path_coords[i])
-		else:
-			del solution_path_coords[i]
+		if solution_path_coords[i] != '' and type(ast.literal_eval(solution_path_coords[i])) == tuple:
+			coords.append(ast.literal_eval(solution_path_coords[i]))
 
 	plt.title('Cities with path of shortest route')
 	x, y = zip(*list_of_coords)
 	plt.scatter(*zip(*list_of_coords))
-	x_new, y_new = zip(*solution_path_coords)
+	x_new, y_new = zip(*coords)
 	plt.plot(x_new, y_new, 'xb-')
 	plt.plot(x_new[0], y_new[0], 'go', label='Start')
 	plt.plot(x_new[-1], y_new[-1], 'ro', label='End')

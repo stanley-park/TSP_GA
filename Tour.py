@@ -75,8 +75,9 @@ class Tour:
 
 	def to_string(self):
 		gene_string = ''
-		for i in range(self.tour_size()):
-			gene_string += '(' + self.get_city(i).to_string()+')' + '->'
-		return gene_string
-
+		gene_string = '(' + self.get_city(0).to_string() + ')'
+		for i in range(1, self.tour_size()):
+			gene_string +=  '->' + str(self.get_city(i).distance_to(self.get_city(i-1))) + '->' + '(' + self.get_city(i).to_string() + ')'
+		#return gene_string
+		return str(self.get_city(2).distance_to(self.get_city(1)))
 
